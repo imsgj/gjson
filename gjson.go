@@ -95,11 +95,11 @@ func (t Result) String() string {
 				return strconv.FormatFloat(t.Num, 'f', -1, 64)
 			}
 		}
-		return t.Raw
+		return strings.Clone(t.Raw)
 	case String:
-		return t.Str
+		return strings.Clone(t.Str)
 	case JSON:
-		return t.Raw
+		return strings.Clone(t.Raw)
 	case True:
 		return "true"
 	}
@@ -468,6 +468,7 @@ end:
 // If you are consuming JSON from an unpredictable source then you may want to
 // use the Valid function first.
 func Parse(json string) Result {
+	json = strings.Clone(json)
 	var value Result
 	i := 0
 	for ; i < len(json); i++ {
